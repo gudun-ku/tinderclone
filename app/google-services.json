@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "308600516119",
+    "firebase_url": "https://tinderfin.firebaseio.com",
+    "project_id": "tinderfin",
+    "storage_bucket": "tinderfin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308600516119:android:d5af8efddfa1a6e29f3652",
+        "android_client_info": {
+          "package_name": "com.beloushkin.tinderclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308600516119-s1d65krgk8f60qakmsg2jnjsrfs2ag3b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beloushkin.tinderclone",
+            "certificate_hash": "8d5adfe4ad5b2aa72632838425403c9b872d1127"
+          }
+        },
+        {
+          "client_id": "308600516119-6je487gkno81me79i74bqboj4cbdj2g0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSWdtQNs0Nv15XTLZljaXxXDlWKo3rb08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308600516119-6je487gkno81me79i74bqboj4cbdj2g0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,4 +3,6 @@
     <string name="hello_world">Hello World!</string>
     <string name="startup_button_login">Login</string>
     <string name="startup_button_signup">Signup</string>
+    <string name="hint_email">Email@email.com</string>
+    <string name="hint_password">******</string>
 </resources>

@@ -1,11 +1,11 @@
 package com.beloushkin.tinderclone.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.beloushkin.tinderclone.R
+import com.beloushkin.tinderclone.views.base.BaseActivity
 
-class StartupActivity : AppCompatActivity() {
+class StartupActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,10 +13,10 @@ class StartupActivity : AppCompatActivity() {
     }
 
     fun onLogin(v: View) {
-
+        startActivity(LoginActivity.newIntent(this))
     }
 
     fun onSignup(v: View) {
-
+        startActivity(SignupActivity.newIntent(this))
     }
 }

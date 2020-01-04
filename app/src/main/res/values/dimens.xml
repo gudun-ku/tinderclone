@@ -8,5 +8,6 @@
     <dimen name="standard_button_text">20sp</dimen>
     <dimen name="standard_button_margin">8dp</dimen>
     <dimen name="standard_button_radius">50dp</dimen>
+    <dimen name="standard_field_margin">16dp</dimen>
 
 </resources>

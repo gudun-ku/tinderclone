@@ -1,5 +1,7 @@
 package com.beloushkin.tinderclone.views
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,21 +9,18 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView
 import android.widget.Toast
 import android.widget.ArrayAdapter
 import com.beloushkin.tinderclone.R
+import com.beloushkin.tinderclone.views.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private var al = mutableListOf<String>()
     private var arrayAdapter: ArrayAdapter<String>? = null
     private var i = 0
-    private var toast: Toast? = null
 
-    private fun makeShortToast(message:String) {
-        toast?.cancel()
-
-        toast = Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-        toast?.show()
+    override fun makeToast(message: String) {
+        super.makeToast(message)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,11 +50,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onLeftCardExit(p0: Any?) {
-                makeShortToast("Left!")
+                makeToast("Left!")
             }
 
             override fun onRightCardExit(p0: Any?) {
-                makeShortToast("Right!")
+                makeToast("Right!")
             }
 
             override fun onAdapterAboutToEmpty(p0: Int) {
@@ -73,7 +72,11 @@ class MainActivity : AppCompatActivity() {
 
         // Optionally add an OnItemClickListener
         frame.setOnItemClickListener { itemPosition, dataObject ->
-            makeShortToast("Clicked!")
+            makeToast("Clicked!")
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context?) = Intent(context, MainActivity::class.java)
     }
 }
