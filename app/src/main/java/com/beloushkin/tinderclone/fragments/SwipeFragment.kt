@@ -8,8 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.beloushkin.tinderclone.R
+import com.beloushkin.tinderclone.fragments.base.TinderFragment
+import com.beloushkin.tinderclone.views.TinderCallback
 
-class SwipeFragment : Fragment() {
+class SwipeFragment : TinderFragment {
+
+    constructor(callback: TinderCallback): super(callback)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

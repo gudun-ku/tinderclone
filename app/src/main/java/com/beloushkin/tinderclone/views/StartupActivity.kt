@@ -1,5 +1,7 @@
 package com.beloushkin.tinderclone.views
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.beloushkin.tinderclone.R
@@ -18,5 +20,9 @@ class StartupActivity : BaseActivity() {
 
     fun onSignup(v: View) {
         startActivity(SignupActivity.newIntent(this))
+    }
+
+    companion object {
+        fun newIntent(context: Context?) = Intent(context, StartupActivity::class.java)
     }
 }
