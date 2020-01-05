@@ -2,15 +2,11 @@ package com.beloushkin.tinderclone.views
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.beloushkin.tinderclone.R
-import com.beloushkin.tinderclone.data.DATA_USERS
-import com.beloushkin.tinderclone.data.User
 import com.beloushkin.tinderclone.views.base.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity() {
@@ -19,7 +15,7 @@ class LoginActivity : BaseActivity() {
     private val firebaseAuthListener = FirebaseAuth.AuthStateListener {
         val user = firebaseAuth.currentUser
         if (user != null) {
-            startActivity(MainActivity.newIntent(this))
+            startActivity(TinderActivity.newIntent(this))
             finish()
         }
     }
@@ -44,7 +40,7 @@ class LoginActivity : BaseActivity() {
             firebaseAuth.signInWithEmailAndPassword(emailET.text.toString(), passwordET.text.toString())
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
-                        makeToast("Signup error ${task.exception?.localizedMessage}")
+                        makeToast("Login error ${task.exception?.localizedMessage}")
                     } else {
                     //  val email = emailET.text.toString()
                     //  val userId = firebaseAuth.currentUser?.uid ?: ""

@@ -9,5 +9,6 @@
     <dimen name="standard_button_margin">8dp</dimen>
     <dimen name="standard_button_radius">50dp</dimen>
     <dimen name="standard_field_margin">16dp</dimen>
+    <dimen name="navigation_heigth">50dp</dimen>
 
 </resources>
