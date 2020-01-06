@@ -93,6 +93,10 @@ class TinderActivity : BaseActivity(), TinderCallback {
 
     override fun getUserDatabase() = userDatabase
 
+    override fun profileComplete() {
+        swipeTab?.select()
+    }
+
     private fun makeNavigationTabs() {
         profileTab = navigationTabs.newTab()
         swipeTab = navigationTabs.newTab()

@@ -10,5 +10,8 @@
     <dimen name="standard_button_radius">50dp</dimen>
     <dimen name="standard_field_margin">16dp</dimen>
     <dimen name="navigation_heigth">50dp</dimen>
+    <dimen name="standard_padding">16dp</dimen>
+    <dimen name="standard_image_width">300dp</dimen>
+    <dimen name="small_padding">8dp</dimen>
 
 </resources>

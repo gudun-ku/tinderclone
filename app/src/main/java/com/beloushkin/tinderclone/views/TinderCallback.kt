@@ -7,4 +7,7 @@ interface TinderCallback {
     fun onSignout()
     fun getUserId(): String
     fun getUserDatabase(): DatabaseReference
+    fun makeToast(message: String)
+    fun profileComplete()
+
 }

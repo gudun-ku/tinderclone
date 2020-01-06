@@ -5,4 +5,15 @@
     <string name="startup_button_signup">Signup</string>
     <string name="hint_email">email@email.com</string>
     <string name="hint_password">******</string>
+    <string name="hint_user_name">Name</string>
+    <string name="hint_user_email">email@email.com</string>
+    <string name="hint_user_age">age</string>
+    <string name="i_am_a">I am a</string>
+    <string name="hint_user_gender">I am a</string>
+    <string name="hint_user_man">Man</string>
+    <string name="hint_user_woman">Woman</string>
+    <string name="hint_preferred_gender">Looking for a</string>
+    <string name="button_sign_out">Sign Out</string>
+    <string name="button_apply">Apply</string>
+    <string name="error_profile_incomplete">Please complete your profile!</string>
 </resources>
