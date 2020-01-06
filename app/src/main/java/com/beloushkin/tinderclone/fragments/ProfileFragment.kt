@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : TinderFragment {
 
-    private lateinit var userId: String
-    private lateinit var userDatabase: DatabaseReference
+    private var userId: String
+    private var userDatabase: DatabaseReference
 
     constructor(callback: TinderCallback): super(callback) {
         userId = callback.getUserId()
