@@ -10,6 +10,7 @@ import com.beloushkin.tinderclone.R
 import com.beloushkin.tinderclone.data.*
 import com.beloushkin.tinderclone.fragments.base.TinderFragment
 import com.beloushkin.tinderclone.views.TinderCallback
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -42,6 +43,8 @@ class ProfileFragment : TinderFragment {
 
         populateInfo()
 
+        photoIV.setOnClickListener { callback?.startActivityForPhoto() }
+
         applyButton.setOnClickListener { onApply() }
         signoutButton.setOnClickListener { callback?.onSignout() }
     }
@@ -57,22 +60,26 @@ class ProfileFragment : TinderFragment {
                 if (isAdded) {
                     val user = snapshot.getValue(User::class.java)
 
-                    nameET.setText(user?.name, TextView.BufferType.EDITABLE)
-                    emailET.setText(user?.email, TextView.BufferType.EDITABLE)
-                    ageET.setText(user?.age, TextView.BufferType.EDITABLE)
+                    user?.run {
+                        nameET.setText(name, TextView.BufferType.EDITABLE)
+                        emailET.setText(email, TextView.BufferType.EDITABLE)
+                        ageET.setText(age, TextView.BufferType.EDITABLE)
 
-                    if (user?.gender == GENDER_MALE)
-                        radioMan1.isChecked = true
+                        if (gender == GENDER_MALE)
+                            radioMan1.isChecked = true
 
-                    if (user?.gender == GENDER_FEMALE)
-                        radioWoman1.isChecked = true
+                        if (gender == GENDER_FEMALE)
+                            radioWoman1.isChecked = true
 
-                    if (user?.preferredGender == GENDER_MALE)
-                        radioMan2.isChecked = true
+                        if (preferredGender == GENDER_MALE)
+                            radioMan2.isChecked = true
 
-                    if (user?.preferredGender == GENDER_FEMALE)
-                        radioWoman2.isChecked = true
+                        if (preferredGender == GENDER_FEMALE)
+                            radioWoman2.isChecked = true
 
+                        if (!imageUrl.isNullOrEmpty())
+                            populateImage(imageUrl)
+                    }
                     progressLayout.visibility = View.GONE
                 }
             }
@@ -106,6 +113,18 @@ class ProfileFragment : TinderFragment {
 
         callback?.profileComplete()
 
+    }
+
+    fun updateImageUri(uri: String) {
+        userDatabase.child(DATA_IMAGE_URL).setValue(uri)
+        // load image to imageview with Glide
+        populateImage(uri)
+    }
+
+    fun populateImage(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .into(photoIV)
     }
 
 

@@ -9,5 +9,6 @@ interface TinderCallback {
     fun getUserDatabase(): DatabaseReference
     fun makeToast(message: String)
     fun profileComplete()
+    fun startActivityForPhoto()
 
 }
