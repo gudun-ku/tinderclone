@@ -10,11 +10,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.UserinfoActivity"></activity>
+        <activity android:name=".views.ChatActivity"></activity>
+        <activity android:name=".views.UserinfoActivity" />
         <activity
             android:name=".views.SignupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.LoginActivity"
             android:screenOrientation="portrait"

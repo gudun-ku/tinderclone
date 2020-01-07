@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.beloushkin.tinderclone.R
 import com.beloushkin.tinderclone.data.Chat
+import com.beloushkin.tinderclone.views.ChatActivity
 import com.bumptech.glide.Glide
 
 class ChatsAdapter(private var chats: ArrayList<Chat>)
@@ -42,7 +43,10 @@ class ChatsAdapter(private var chats: ArrayList<Chat>)
             }
 
             layout.setOnClickListener {
-                // TODO - add chat functionality
+                val intent = ChatActivity.newIntent(view.context, chat.chatId,
+                    chat.userId, chat.imageUrl, chat.otherUserId)
+
+                view.context.startActivity(intent)
             }
 
         }
