@@ -24,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_tinder.*
 import android.graphics.ImageDecoder
 import android.os.Build
+import com.beloushkin.tinderclone.data.DATA_CHATS
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 
@@ -35,6 +36,7 @@ class TinderActivity : BaseActivity(), TinderCallback {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val userId = firebaseAuth.currentUser?.uid
     private lateinit var userDatabase: DatabaseReference
+    private lateinit var chatDatabase: DatabaseReference
 
     lateinit var profileFragment: ProfileFragment
     lateinit var swipeFragment: SwipeFragment
@@ -59,6 +61,7 @@ class TinderActivity : BaseActivity(), TinderCallback {
         }
 
         userDatabase = FirebaseDatabase.getInstance().reference.child(DATA_USERS)
+        chatDatabase = FirebaseDatabase.getInstance().reference.child(DATA_CHATS)
 
         makeNavigationTabs()
         navigationTabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
@@ -106,6 +109,8 @@ class TinderActivity : BaseActivity(), TinderCallback {
     override fun getUserId() = userId!!
 
     override fun getUserDatabase() = userDatabase
+
+    override fun getChatDatabase() = chatDatabase
 
     override fun profileComplete() {
         swipeTab?.select()

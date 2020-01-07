@@ -1,6 +1,7 @@
 package com.beloushkin.tinderclone.data
 
 val DATA_USERS = "Users"
+val DATA_CHATS = "Chats"
 val DATA_PROFILE_IMAGE = "profileImage"
 
 val DATA_NAME = "name"

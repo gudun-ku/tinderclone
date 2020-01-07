@@ -21,16 +21,16 @@ import kotlinx.android.synthetic.main.fragment_swipe.*
 
 class SwipeFragment : TinderFragment {
 
-    private var userId: String
-    private var userDatabase: DatabaseReference
-
     private var cardsAdapter: ArrayAdapter<User>? = null
     private var rowItems = ArrayList<User>()
-    private var preferredGender: String?  = null
+    private var preferredGender: String? = null
+    private var userName: String? = null
+    private var userImageUrl: String? = null
+    private var chatDatabase: DatabaseReference
 
-    constructor(callback: TinderCallback): super(callback) {
-        userId = callback.getUserId()
+    constructor(callback: TinderCallback) : super(callback) {
         userDatabase = callback.getUserDatabase()
+        chatDatabase = callback.getChatDatabase()
     }
 
     override fun onCreateView(
@@ -44,13 +44,15 @@ class SwipeFragment : TinderFragment {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userDatabase.child(userId).addListenerForSingleValueEvent(object: ValueEventListener {
+        userDatabase.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(err: DatabaseError) {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
                 preferredGender = user?.preferredGender
+                userName = user?.name
+                userImageUrl = user?.imageUrl
                 populateItems()
             }
         })
@@ -58,7 +60,7 @@ class SwipeFragment : TinderFragment {
         cardsAdapter = CardsAdapter(context!!, R.layout.item, rowItems)
 
         frame.adapter = cardsAdapter
-        frame.setFlingListener(object: SwipeFlingAdapterView.onFlingListener {
+        frame.setFlingListener(object : SwipeFlingAdapterView.onFlingListener {
             override fun removeFirstObjectInAdapter() {
                 rowItems.removeAt(0)
                 cardsAdapter?.notifyDataSetChanged()
@@ -66,13 +68,14 @@ class SwipeFragment : TinderFragment {
 
             override fun onLeftCardExit(data: Any?) {
                 var user = data as User
-                userDatabase.child(user.uid.toString()).child(DATA_SWIPES_LEFT).child(userId).setValue(true)
+                userDatabase.child(user.uid.toString()).child(DATA_SWIPES_LEFT).child(userId)
+                    .setValue(true)
             }
 
             override fun onRightCardExit(data: Any?) {
                 val selectedUser = data as User
                 val selectedUserId = selectedUser.uid
-                if(!selectedUserId.isNullOrEmpty()) {
+                if (!selectedUserId.isNullOrEmpty()) {
                     // check if user handled as swiped right
                     userDatabase.child(userId).child(DATA_SWIPES_RIGHT)
                         .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -83,9 +86,30 @@ class SwipeFragment : TinderFragment {
                                 if (snapshot.hasChild(selectedUserId)) {
                                     callback?.makeToast("Match!")
 
-                                    userDatabase.child(userId).child(DATA_SWIPES_RIGHT).child(selectedUserId).removeValue()
-                                    userDatabase.child(userId).child(DATA_MATCHES).child(selectedUserId).setValue(true)
-                                    userDatabase.child(selectedUserId).child(DATA_MATCHES).child(userId).setValue(true)
+                                    // create chat
+                                    val chatKey = chatDatabase.push().key
+
+                                    chatKey?.let {
+                                        userDatabase.child(userId).child(DATA_SWIPES_RIGHT)
+                                            .child(selectedUserId).removeValue()
+                                        // set chatkey for selected matches
+                                        userDatabase.child(userId).child(DATA_MATCHES)
+                                            .child(selectedUserId).setValue(it)
+                                        userDatabase.child(selectedUserId).child(DATA_MATCHES)
+                                            .child(userId).setValue(it)
+
+                                        chatDatabase.child(it).child(userId).child(DATA_NAME)
+                                            .setValue(userName)
+                                        chatDatabase.child(it).child(userId).child(DATA_IMAGE_URL)
+                                            .setValue(userImageUrl)
+
+                                        chatDatabase.child(it).child(selectedUserId)
+                                            .child(DATA_NAME).setValue(selectedUser.name)
+                                        chatDatabase.child(it).child(selectedUserId)
+                                            .child(DATA_IMAGE_URL).setValue(selectedUser.imageUrl)
+                                    }
+
+
                                 } else {
                                     userDatabase.child(selectedUserId).child(DATA_SWIPES_RIGHT)
                                         .child(userId).setValue(true)
@@ -104,14 +128,16 @@ class SwipeFragment : TinderFragment {
             }
         })
 
+        frame.setOnItemClickListener { _, _ -> }
+
         likeButton.setOnClickListener {
-            if(rowItems.isNotEmpty()) {
+            if (rowItems.isNotEmpty()) {
                 frame.topCardListener.selectRight()
             }
         }
 
         dislikeButton.setOnClickListener {
-            if(rowItems.isNotEmpty()) {
+            if (rowItems.isNotEmpty()) {
                 frame.topCardListener.selectLeft()
             }
         }
@@ -129,11 +155,12 @@ class SwipeFragment : TinderFragment {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach { child ->
                     val user = child.getValue(User::class.java)
-                    if (user != null)  {
+                    if (user != null) {
                         var showUser = true
                         if (child.child(DATA_SWIPES_LEFT).hasChild(userId) ||
                             child.child(DATA_SWIPES_RIGHT).hasChild(userId) ||
-                            child.child(DATA_MATCHES).hasChild(userId)) {
+                            child.child(DATA_MATCHES).hasChild(userId)
+                        ) {
                             showUser = false
                         }
                         if (showUser) {

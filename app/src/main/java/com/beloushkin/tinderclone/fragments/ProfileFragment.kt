@@ -13,20 +13,13 @@ import com.beloushkin.tinderclone.views.TinderCallback
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class ProfileFragment : TinderFragment {
 
-    private var userId: String
-    private var userDatabase: DatabaseReference
-
-    constructor(callback: TinderCallback): super(callback) {
-        userId = callback.getUserId()
-        userDatabase = callback.getUserDatabase().child(userId)
-    }
+    constructor(callback: TinderCallback): super(callback)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
